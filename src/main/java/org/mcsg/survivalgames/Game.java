@@ -396,7 +396,7 @@ public class Game {
 				pl.setHealth(pl.getMaxHealth());
 				//clearInv(pl);
 				msgmgr.sendFMessage(PrefixType.INFO, "game.goodluck", pl);
-				pl.sendMessage(ChatColor.GOLD +"[" + ChatColor.RED + "MCHG" + ChatColor.GOLD + "]" + ChatColor.GOLD + "There are " + ChatColor.GREEN +getActivePlayers() +ChatColor.GOLD + " in this game!");
+				msgmgr.sendFMessage(PrefixType.INFO, "game.playersingame", pl, "activeplayers-"+getActivePlayers());
 			}
 			if (config.getBoolean("restock-chest")) {
 				SettingsManager.getGameWorld(gameID).setTime(0);
@@ -469,7 +469,7 @@ public class Game {
 					}
 				}
 			}, 0, 20);
-			
+
 		}
 	}
 
@@ -560,30 +560,30 @@ public class Game {
 				if (getActivePlayers() > 1) {
 					for (Player pl: getAllPlayers()) {
 						msgmgr.sendMessage(PrefixType.INFO, ChatColor.GOLD + "There are " + ChatColor.YELLOW + "" + getActivePlayers() + ChatColor.GOLD + " players remaining!", pl);
+					}
 				}
 			}
-		}
 
-		for (Player pe: activePlayers) {
-			Location l = pe.getLocation();
-			l.setY(l.getWorld().getMaxHeight());
-			l.getWorld().strikeLightningEffect(l);
-		}
+			for (Player pe: activePlayers) {
+				Location l = pe.getLocation();
+				l.setY(l.getWorld().getMaxHeight());
+				l.getWorld().strikeLightningEffect(l);
+			}
 
-		if (getActivePlayers() <= config.getInt("endgame.players") && config.getBoolean("endgame.fire-lighting.enabled") && !endgameRunning) {
+			if (getActivePlayers() <= config.getInt("endgame.players") && config.getBoolean("endgame.fire-lighting.enabled") && !endgameRunning) {
 
-			tasks.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(GameManager.getInstance().getPlugin(),
-					new EndgameManager(),
-					0,
-					config.getInt("endgame.fire-lighting.interval") * 20));
-		}
+				tasks.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(GameManager.getInstance().getPlugin(),
+						new EndgameManager(),
+						0,
+						config.getInt("endgame.fire-lighting.interval") * 20));
+			}
 
-		if (activePlayers.size() < 2 && mode != GameMode.WAITING) {
-			playerWin(p);
-			endGame();
+			if (activePlayers.size() < 2 && mode != GameMode.WAITING) {
+				playerWin(p);
+				endGame();
+			}
+			LobbyManager.getInstance().updateWall(gameID);
 		}
-		LobbyManager.getInstance().updateWall(gameID);
-	}
 	}
 	/*
 	 * 
