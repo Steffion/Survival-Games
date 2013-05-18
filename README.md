@@ -47,7 +47,7 @@ If you have for example 6 arenas, and you want every player to be able to join a
  - sg.arena.vote
  - sg.lobby.join
  
- Credits
- --------------------
+Credits
+--------------------
  Other things in this fork are made by:
  Steffion
