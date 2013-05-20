@@ -20,11 +20,11 @@ public class LogoutEvent implements Listener{
         if(GameManager.getInstance().isSpectator(p))
         	GameManager.getInstance().removeSpectator(p);
         if(id == -1) return;
-        if(GameManager.getInstance().getGameMode(id)==Game.GameMode.INGAME)
+        if (GameManager.getInstance().getGameMode(id)==Game.GameMode.INGAME) {
             GameManager.getInstance().getGame(id).killPlayer(p, true);
-        else
+        } else {
             GameManager.getInstance().getGame(id).removePlayer(p, true);
-        
+        }
         //GameManager.getInstance().removePlayerRefrence(p);
     }
     
