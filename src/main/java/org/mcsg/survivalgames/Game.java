@@ -460,6 +460,9 @@ public class Game {
 							msgFall(PrefixType.INFO, "game.countdown","t-"+count);
 
 						}
+						if (count == 10) {
+							MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "game.start", "count-"+count, "name-"+gameID);
+						}
 						count--;
 						LobbyManager.getInstance().updateWall(gameID);
 					} else {
